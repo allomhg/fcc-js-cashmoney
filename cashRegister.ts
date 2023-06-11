@@ -1,16 +1,67 @@
-function checkCashRegister(price, cash, cid) {
+const cashValue = [
+    { name: "ONE HUNDRED", value: 100 },
+    { name: "TWENTY", value: 20 },
+    { name: "TEN", value: 10 } ,
+    { name: "FIVE", value: 5 },
+    { name: "ONE", value: 1 },
+    { name: "QUARTER", value: 0.25 },
+    { name: "DIME", value: 0.1 },
+    { name: "NICKEL", value: 0.05 },
+    { name: "PENNY", value: 0.01 }
+]
+
+function checkCashRegister (price, cash, cid) {
     const change = cash - price;
-    let myObject = {
+    console.log("Change = " + change);
+    let regReturn = {
         status: "",
         change: []
+    };
+
+    const register = cid.reduce ( ( acc, curVal ) => {
+        acc.total += curVal[1];
+        // console.log(acc.total);
+        // console.log(curVal[1]);
+        acc[curVal[0]] = curVal[1];
+        //console.log(acc);
+        // console.log(curVal);
+        // console.log(acc);
+        return acc;
+    }, { total: 0 } );
+
+    console.log(register);
+
+    const changeArr = cashValue.reduce ( ( acc, curVal ) => { 
+        let valueAmt = 0;
+        // console.log(curVal);
+        // console.log("curVal.name: " + curVal.name);
+        // console.log("register current value: " + register[curVal.name]);
+
+        while ( valueAmt < change && register[curVal.name] > 0 ) {
+            // console.log(" --- NEW WHILE LOOP --- ");
+            valueAmt += curVal.value;
+            // console.log("valueAmt = " + valueAmt);
+            register[curVal.name] -= curVal.value;
+            // console.log("register value = " + register[curVal.name]);
+
+            if (valueAmt == change) {
+                return valueAmt;
+            }
+        }
+        console.log(acc);
+        return acc;
+    }, [] );
+
+    if ( register.total == change) {
+        regReturn.status = "CLOSED";
+        regReturn.change = cid;
+        return regReturn;
     }
 
-    console.log(change);
-    console.log(cid[0][1]);
-    //console.log(cid.flat()) ;
-    
-    if (true) {
-
+    if ( register.total < change ) {
+        regReturn.status = "INSUFFICIENT_FUNDS";
+        regReturn.change = [];
+        return regReturn;
     }
 
     return change;
