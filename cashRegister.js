@@ -18,32 +18,15 @@ function checkCashRegister(price, cash, cid) {
     };
     var register = cid.reduce(function (acc, curVal) {
         acc.total += curVal[1];
-        // console.log(acc.total);
-        // console.log(curVal[1]);
+        //console.log(acc.total);
+        //console.log(curVal[1]);
         acc[curVal[0]] = curVal[1];
         //console.log(acc);
         // console.log(curVal);
         // console.log(acc);
         return acc;
     }, { total: 0 });
-    console.log(register);
-    var changeArr = cashValue.reduce(function (acc, curVal) {
-        var valueAmt = 0;
-        // console.log(curVal);
-        console.log("curVal.name: " + curVal.name);
-        console.log("register current value: " + register[curVal.name]);
-        while (valueAmt <= change && register[curVal.name] > 0) {
-            console.log(" --- NEW WHILE LOOP --- ");
-            valueAmt += curVal.value;
-            console.log("valueAmt = " + valueAmt);
-            register[curVal.name] -= curVal.value;
-            console.log("register value = " + register[curVal.name]);
-        }
-        //console.log(register[curVal.name]);
-        // console.log(acc);
-        // console.log(curVal);
-        return acc;
-    }, []);
+    //console.log(register);
     if (register.total == change) {
         regReturn.status = "CLOSED";
         regReturn.change = cid;
@@ -54,6 +37,25 @@ function checkCashRegister(price, cash, cid) {
         regReturn.change = [];
         return regReturn;
     }
+    var changeArr = cashValue.reduce(function (acc, curVal) {
+        var valueAmt = 0;
+        console.log(curVal);
+        // console.log("curVal.name: " + curVal.name);
+        // console.log("register current value: " + register[curVal.name]);
+        while (valueAmt < change && register[curVal.name] > 0) {
+            // console.log(" --- NEW WHILE LOOP --- ");
+            valueAmt += curVal.value;
+            // console.log("valueAmt = " + valueAmt);
+            register[curVal.name] -= curVal.value;
+            // console.log("register value = " + register[curVal.name]);      
+        }
+        if (valueAmt == change) {
+            regReturn.change.push([curVal.name, valueAmt]);
+        }
+        //console.log(acc);
+        return acc;
+    }, []);
+    console.log(regReturn);
     return change;
 }
 checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);

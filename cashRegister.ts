@@ -20,37 +20,17 @@ function checkCashRegister (price, cash, cid) {
 
     const register = cid.reduce ( ( acc, curVal ) => {
         acc.total += curVal[1];
-        // console.log(acc.total);
-        // console.log(curVal[1]);
+        //console.log(acc.total);
+        //console.log(curVal[1]);
         acc[curVal[0]] = curVal[1];
+
         //console.log(acc);
         // console.log(curVal);
         // console.log(acc);
         return acc;
     }, { total: 0 } );
 
-    console.log(register);
-
-    const changeArr = cashValue.reduce ( ( acc, curVal ) => { 
-        let valueAmt = 0;
-        // console.log(curVal);
-        // console.log("curVal.name: " + curVal.name);
-        // console.log("register current value: " + register[curVal.name]);
-
-        while ( valueAmt < change && register[curVal.name] > 0 ) {
-            // console.log(" --- NEW WHILE LOOP --- ");
-            valueAmt += curVal.value;
-            // console.log("valueAmt = " + valueAmt);
-            register[curVal.name] -= curVal.value;
-            // console.log("register value = " + register[curVal.name]);
-
-            if (valueAmt == change) {
-                return valueAmt;
-            }
-        }
-        console.log(acc);
-        return acc;
-    }, [] );
+    //console.log(register);
 
     if ( register.total == change) {
         regReturn.status = "CLOSED";
@@ -63,6 +43,29 @@ function checkCashRegister (price, cash, cid) {
         regReturn.change = [];
         return regReturn;
     }
+
+    const changeArr = cashValue.reduce ( ( acc, curVal ) => { 
+        let valueAmt = 0;
+        console.log(curVal);
+        // console.log("curVal.name: " + curVal.name);
+        // console.log("register current value: " + register[curVal.name]);
+
+        while ( valueAmt < change && register[curVal.name] > 0 ) {
+            // console.log(" --- NEW WHILE LOOP --- ");
+            valueAmt += curVal.value;
+            // console.log("valueAmt = " + valueAmt);
+            register[curVal.name] -= curVal.value;
+            // console.log("register value = " + register[curVal.name]);      
+        }
+
+        if ( valueAmt == change) {
+            regReturn.change.push([curVal.name, valueAmt]);
+        }
+        //console.log(acc);
+        return acc;
+    }, [] );
+
+    console.log(regReturn);
 
     return change;
 }
