@@ -1,4 +1,4 @@
-const cashValue = [
+const cashValue: { name: string, value: number }[] = [
     { name: "ONE HUNDRED", value: 100 },
     { name: "TWENTY", value: 20 },
     { name: "TEN", value: 10 } ,
@@ -10,10 +10,10 @@ const cashValue = [
     { name: "PENNY", value: 0.01 }
 ]
 
-function checkCashRegister (price, cash, cid) {
-    const change = cash - price;
+function checkCashRegister ( price: number, cash: number, cid: Array<[string, number]> ) {
+    const change: number = cash - price;
     console.log("Change = " + change);
-    let regReturn = {
+    let regReturn: { status: string, change: [] } = {
         status: "",
         change: []
     };
