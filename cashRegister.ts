@@ -10,27 +10,27 @@ const cashValue: { name: string, value: number }[] = [
     { name: "PENNY", value: 0.01 }
 ]
 
+interface regStatusChange {
+    status: string;
+    change: Array<[string, number]>;
+}
+
 function checkCashRegister ( price: number, cash: number, cid: Array<[string, number]> ) {
     const change: number = cash - price;
-    console.log("Change = " + change);
-    let regReturn: { status: string, change: [] } = {
-        status: "",
+    console.log('Change = ' + change);
+    
+    let regReturn: regStatusChange = {
+        status: '',
         change: []
     };
 
     const register = cid.reduce ( ( acc, curVal ) => {
         acc.total += curVal[1];
-        //console.log(acc.total);
-        //console.log(curVal[1]);
         acc[curVal[0]] = curVal[1];
-
-        //console.log(acc);
-        // console.log(curVal);
-        // console.log(acc);
         return acc;
     }, { total: 0 } );
 
-    //console.log(register);
+    console.log(register);
 
     if ( register.total == change) {
         regReturn.status = "CLOSED";

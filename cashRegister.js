@@ -11,22 +11,17 @@ var cashValue = [
 ];
 function checkCashRegister(price, cash, cid) {
     var change = cash - price;
-    console.log("Change = " + change);
+    console.log('Change = ' + change);
     var regReturn = {
-        status: "",
+        status: '',
         change: []
     };
     var register = cid.reduce(function (acc, curVal) {
         acc.total += curVal[1];
-        //console.log(acc.total);
-        //console.log(curVal[1]);
         acc[curVal[0]] = curVal[1];
-        //console.log(acc);
-        // console.log(curVal);
-        // console.log(acc);
         return acc;
     }, { total: 0 });
-    //console.log(register);
+    console.log(register);
     if (register.total == change) {
         regReturn.status = "CLOSED";
         regReturn.change = cid;
