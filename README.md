@@ -24,3 +24,6 @@ Otherwise, return `{status: "OPEN", change: [...]}`, with the change due in coin
 | Ten Dollars	     | $10 (TEN)        |
 | Twenty Dollars	 | $20 (TWENTY)     |
 | One-hundred Dollars|$100 (ONE HUNDRED)|
+
+See below link for test details.
+https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/cash-register
